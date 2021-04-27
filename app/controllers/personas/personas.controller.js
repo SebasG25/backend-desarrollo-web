@@ -8,15 +8,15 @@ const getPersonas = async(req, res) => {
     return res.send(rows);
 };
 
-const createPersona = (req, res) => {
+const createPersona = (req, res) => { // TODO completar createPersona
     return res.send('Create persona');
 };
 
-const updatePersona = (req, res) => {
+const updatePersona = (req, res) => {   // TODO completar updatePersona
     return res.send('Update persona');
 };
 
-const deletePersona = (req, res) => {
+const deletePersona = (req, res) => {   // TODO completar deletePersona
     return res.send('Delete persona');
 };
 
