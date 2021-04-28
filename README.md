@@ -1,10 +1,10 @@
 # backend-desarrollo-web
-Uso de nodemailer y exceljs
+Uso principalmente de nodemailer y csv-writer
 
 ## Librerias usadas:
 
 - ExpressJS
 - Nodemon
 - Nodemailer
-- Exceljs
+- cv-writer
 - pg
