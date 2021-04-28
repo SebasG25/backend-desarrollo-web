@@ -13,6 +13,5 @@ router
   .delete('/personas/:id', _personaController.deletePersona)
 
   .post('/reportes', _reporteController.createReporte)
-  .post('/send-email', _reporteController.enviarCorreo);
 
 module.exports = router;

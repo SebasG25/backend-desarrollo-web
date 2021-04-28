@@ -1,7 +1,8 @@
 const PostgresService = require('../../services/postgres.service');
-const _reporteController = require('../reportes/reportes.controller');
 const _pg = new PostgresService();
 
+const NodemailerService = require('../../services/nodemailer.service');
+const _nodemailer = new NodemailerService();
 
 /**
  * Consultar todas las personas
@@ -55,7 +56,7 @@ const getPersona = async (req, res) => {
 };
 
 /**
- * Crear una persona
+ * Crear una persona y envía un correo a su respectivo email
  * @param {Request} req 
  * @param {Response} res 
  * @returns 
@@ -66,17 +67,21 @@ const createPersona = async (req, res) => {
         let persona = req.body;
         let sql = `INSERT INTO public.personas ("name", email) VALUES('${persona.name}', '${persona.email}');`;
         let result = await _pg.executeSql(sql);
-        _reporteController.enviarCorreo.mailOptions
+        let resultEmail = await _nodemailer.enviarCorreo(persona.email, persona.name);
         return res.send({
             estado: result.rowCount == 1,
             mensaje: result.rowCount == 1 ? "Persona creada" : "La persona no fue creada",
             contenido: persona,
+            informacionEmail:{
+                destinatario: resultEmail.accepted[0],
+                asunto: _nodemailer.mailOptions.subject
+            }
         });
     } catch (error) {
         return res.send({
             estado: false,
             mensaje: "Ha ocurrido un error creando la persona",
-            contenido: error,
+            contenido: error.message,
         });
     }
 };
