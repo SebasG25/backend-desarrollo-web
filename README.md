@@ -6,5 +6,5 @@ Uso principalmente de nodemailer y csv-writer
 - ExpressJS
 - Nodemon
 - Nodemailer
-- cv-writer
+- csv-writer
 - pg
