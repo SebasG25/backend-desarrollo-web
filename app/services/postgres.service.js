@@ -4,7 +4,7 @@ class PostgresService {
     constructor() {
         this.connectionString = "postgresql://postgres:admin@localhost:5432/universidad";
         this.pool = new pg.Pool(
-            {connectionString:this.connectionString}
+            { connectionString: this.connectionString }
         );
     }
 

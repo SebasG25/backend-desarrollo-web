@@ -7,8 +7,12 @@ const _reporteController = require('../controllers/reportes/reportes.controller'
 
 router
   .get('/personas', _personaController.getPersonas)
+  .get('/personas/:id', _personaController.getPersona)
   .post('/personas', _personaController.createPersona)
+  .put('/personas/:id', _personaController.updatePersona)
+  .delete('/personas/:id', _personaController.deletePersona)
+
   .post('/reportes', _reporteController.createReporte)
-  .put('/personas', _personaController.updatePersona)
-  .delete('/personas', _personaController.deletePersona);
+  .post('/send-email', _reporteController.enviarCorreo);
+
 module.exports = router;
