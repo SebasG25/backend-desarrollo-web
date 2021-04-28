@@ -54,9 +54,10 @@ class NodemailerService{
         });
     }
 
-    async enviarCorreo(destinatario, nombre){
+    async enviarCorreo(destinatario, nombre, cuerpo){
         this.mailOptions.to = destinatario;
-        this.mailOptions.subject += `${nombre}`
+        this.mailOptions.subject += `${nombre}`;
+        this.mailOptions.html = cuerpo;
         let result = await this.transporter.sendMail(this.mailOptions);
         return result;
     }
