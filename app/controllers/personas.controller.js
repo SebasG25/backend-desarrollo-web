@@ -1,8 +1,11 @@
-const PostgresService = require('../../services/postgres.service');
+const PostgresService = require('../services/postgres.service');
 const _pg = new PostgresService();
 
-const NodemailerService = require('../../services/nodemailer.service');
+const NodemailerService = require('../services/nodemailer.service');
 const _nodemailer = new NodemailerService();
+
+const ExcelService = require('../services/excel.service');
+const _excel = new ExcelService();
 
 /**
  * Consultar todas las personas
@@ -19,12 +22,39 @@ const getPersonas = async (req, res) => {
             estado: true,
             mensaje: "Personas consultadas",
             contenido: rows,
+            
         });
     } catch (error) {
         return res.send({
             estado: false,
             mensaje: "Ha ocurrido un error consultando las personas",
-            contenido: error,
+            contenido: error.message,
+        });
+    }
+};
+
+/**
+ * Consultar todas las personas para llevarlas a un report csv
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns 
+ */
+const getReportePersonas = async (req, res) => {
+    try {
+        let sql = 'SELECT * FROM personas';
+        let result = await _pg.executeSql(sql);
+        let rows = result.rows;
+        _excel.enviarReporte(rows);
+        return res.send({
+            estado: true,
+            mensaje: "Se ha creado el reporte",
+            contenido: 'localhost:3001/static/reporte.csv',
+        });
+    } catch (error) {
+        return res.send({
+            estado: false,
+            mensaje: "Ha ocurrido un error consultando las personas",
+            contenido: error.message,
         });
     }
 };
@@ -137,4 +167,4 @@ const deletePersona = async (req, res) => {
     }
 };
 
-module.exports = { getPersonas, getPersona, createPersona, updatePersona, deletePersona };
+module.exports = { getPersonas, getReportePersonas, getPersona, createPersona, updatePersona, deletePersona };

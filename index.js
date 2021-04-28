@@ -4,6 +4,7 @@ const port = 3001;
 const router=require('./app/routers/index');
 
 app.use(express.json());
+app.use('/static', express.static('static'));
 app.use('/', router);
 
 app.listen(port, () => {
