@@ -15,12 +15,15 @@ class ExcelService {
 
   async enviarReporte(data) {
     const path = 'static/reporte.csv';
-    try {
-      fs.unlinkSync(path);
-    } catch (error) {
-      console.error('Error:', error);
+    if(fs.existsSync(path)){
+      try {
+        // Borrar el archivo para no repetir datos
+        fs.unlinkSync(path);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
-    await this.csvWriter.writeRecords(data)
+    await this.csvWriter.writeRecords(data);
   }
 }
 
